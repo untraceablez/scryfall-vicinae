@@ -40,7 +40,7 @@ export async function searchCards(query: string, signal: AbortSignal): Promise<S
   const url = `${API_BASE}/cards/search?q=${encodeURIComponent(query)}&unique=cards&order=name`;
   const response = await fetch(url, {
     signal,
-    headers: { "User-Agent": "vicinae-scryfall/0.1.0", Accept: "application/json" },
+    headers: { "User-Agent": "vicinae-scryfall", Accept: "application/json" },
   });
 
   if (response.status === 404) return { cards: [], total: 0 };

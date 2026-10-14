@@ -19,6 +19,10 @@ The first few matches are shown with the card image and details. The last row op
 
 The number of cards listed can be changed in the extension preferences.
 
+## Network use
+
+The extension only talks to the public [Scryfall API](https://scryfall.com/docs/api) (`api.scryfall.com`) and loads card images from Scryfall. Searches are debounced to respect Scryfall's rate limits. No analytics, accounts or API keys are involved.
+
 ## Development
 
 ```bash
