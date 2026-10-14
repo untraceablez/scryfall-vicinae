@@ -16,7 +16,6 @@
     {
       "name": "scry",
       "title": "Search Scryfall",
-      "subtitle": "Scryfall",
       "description": "Search Magic: The Gathering cards by name or Scryfall syntax",
       "mode": "view",
       "keywords": ["scry", "mtg", "magic"]
