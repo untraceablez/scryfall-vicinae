@@ -17,6 +17,7 @@ export interface Card extends CardFace {
   set: string;
   set_name: string;
   rarity: string;
+  cmc: number;
   card_faces?: CardFace[];
   prices: Record<string, string | null>;
   legalities: Record<string, string>;

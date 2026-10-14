@@ -9,6 +9,12 @@ export function manaCost(card: Card): string {
   return card.mana_cost ?? card.card_faces?.map((f) => f.mana_cost).filter(Boolean).join(" // ") ?? "";
 }
 
+/** Mana cost without braces plus the mana value, e.g. "1UG (3)". */
+export function manaValueText(card: Card): string {
+  const cost = manaCost(card).replace(/\{([^}]+)\}/g, "$1");
+  return cost ? `${cost} (${card.cmc})` : `(${card.cmc})`;
+}
+
 export function typeLine(card: Card): string {
   return card.type_line ?? card.card_faces?.map((f) => f.type_line).filter(Boolean).join(" // ") ?? "";
 }
@@ -29,10 +35,34 @@ export function formatPrices(card: Card): string {
   return parts.length ? parts.join(" · ") : "N/A";
 }
 
-/** Formats where the card is legal or restricted, e.g. "standard, modern". */
+const FORMAT_NAMES: Record<string, string> = {
+  standard: "Standard",
+  future: "Future",
+  historic: "Historic",
+  timeless: "Timeless",
+  gladiator: "Gladiator",
+  pioneer: "Pioneer",
+  modern: "Modern",
+  legacy: "Legacy",
+  pauper: "Pauper",
+  vintage: "Vintage",
+  penny: "Penny Dreadful",
+  commander: "Commander",
+  oathbreaker: "Oathbreaker",
+  standardbrawl: "Standard Brawl",
+  brawl: "Brawl",
+  alchemy: "Alchemy",
+  paupercommander: "Pauper Commander",
+  duel: "Duel Commander",
+  oldschool: "Old School",
+  premodern: "Premodern",
+  predh: "Pre-EDH",
+};
+
+/** Formats where the card is legal or restricted, e.g. "Standard, Pauper Commander". */
 export function legalFormats(card: Card): string {
   const formats = Object.entries(card.legalities)
     .filter(([, status]) => status === "legal" || status === "restricted")
-    .map(([format]) => format);
+    .map(([format]) => FORMAT_NAMES[format] ?? format.charAt(0).toUpperCase() + format.slice(1));
   return formats.length ? formats.join(", ") : "None";
 }

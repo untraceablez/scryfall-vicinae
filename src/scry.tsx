@@ -1,7 +1,8 @@
 import { Action, ActionPanel, Icon, List, Toast, getPreferenceValues, showToast } from "@vicinae/api";
 import { useEffect, useState } from "react";
 import { Card, ScryfallError, SearchResult, searchCards, searchUrl } from "./api";
-import { formatPrices, imageUrl, legalFormats, manaCost, oracleText, typeLine } from "./card";
+import { manaCostFile, manaSymbols } from "./mana";
+import { formatPrices, imageUrl, legalFormats, manaCost, manaValueText, oracleText, typeLine } from "./card";
 
 const DEBOUNCE_MS = 300;
 const SYNTAX_URL = "https://scryfall.com/docs/syntax";
@@ -13,20 +14,24 @@ function isAbortError(error: unknown): boolean {
 function CardItem({ card }: { card: Card }) {
   const image = imageUrl(card);
   const text = oracleText(card);
+  const cost = manaCostFile(manaCost(card));
+  const markdown = [cost && `![${manaCost(card)}](file://${cost})`, image ? `![${card.name}](${image})` : `**${card.name}**`]
+    .filter(Boolean)
+    .join("\n\n");
   return (
     <List.Item
       title={card.name}
-      subtitle={manaCost(card)}
-      accessories={[{ tag: card.set.toUpperCase() }, { text: card.rarity }]}
+      accessories={[...manaSymbols(manaCost(card)), { tag: card.set.toUpperCase() }, { text: card.rarity }]}
       detail={
         <List.Item.Detail
-          markdown={image ? `![${card.name}](${image})` : `**${card.name}**`}
+          markdown={markdown}
           metadata={
             <List.Item.Detail.Metadata>
               <List.Item.Detail.Metadata.Label title="Type" text={typeLine(card)} />
+              <List.Item.Detail.Metadata.Label title="Mana Value" text={manaValueText(card)} />
               <List.Item.Detail.Metadata.Label title="Set" text={card.set_name} />
               <List.Item.Detail.Metadata.Label title="Prices" text={formatPrices(card)} />
-              <List.Item.Detail.Metadata.Label title="Legal In" text={legalFormats(card)} />
+              <List.Item.Detail.Metadata.Label title="Legal" text={legalFormats(card)} />
             </List.Item.Detail.Metadata>
           }
         />
