@@ -1,8 +1,8 @@
 import { Action, ActionPanel, Icon, List, Toast, getPreferenceValues, showToast } from "@vicinae/api";
 import { useEffect, useState } from "react";
 import { Card, ScryfallError, SearchResult, searchCards, searchUrl } from "./api";
-import { manaCostFile, manaSymbols } from "./mana";
-import { formatPrices, imageUrl, legalFormats, manaCost, manaValueText, oracleText, typeLine } from "./card";
+import { manaSymbols } from "./mana";
+import { formatPrices, imageUrl, legalFormats, manaCost, oracleText, typeLine } from "./card";
 
 const DEBOUNCE_MS = 300;
 const SYNTAX_URL = "https://scryfall.com/docs/syntax";
@@ -14,21 +14,23 @@ function isAbortError(error: unknown): boolean {
 function CardItem({ card }: { card: Card }) {
   const image = imageUrl(card);
   const text = oracleText(card);
-  const cost = manaCostFile(manaCost(card));
-  const markdown = [cost && `![${manaCost(card)}](file://${cost})`, image ? `![${card.name}](${image})` : `**${card.name}**`]
-    .filter(Boolean)
-    .join("\n\n");
+  const symbols = manaSymbols(manaCost(card));
   return (
     <List.Item
       title={card.name}
-      accessories={[...manaSymbols(manaCost(card)), { tag: card.set.toUpperCase() }, { text: card.rarity }]}
+      accessories={[...symbols, { tag: card.set.toUpperCase() }, { text: card.rarity }]}
       detail={
         <List.Item.Detail
-          markdown={markdown}
+          markdown={image ? `![${card.name}](${image})` : `**${card.name}**`}
           metadata={
             <List.Item.Detail.Metadata>
               <List.Item.Detail.Metadata.Label title="Type" text={typeLine(card)} />
-              <List.Item.Detail.Metadata.Label title="Mana Value" text={manaValueText(card)} />
+              <List.Item.Detail.Metadata.TagList title="Mana Value">
+                {symbols.map((symbol, i) => (
+                  <List.Item.Detail.Metadata.TagList.Item key={i} {...symbol} />
+                ))}
+                <List.Item.Detail.Metadata.TagList.Item text={`(CMC: ${card.cmc})`} />
+              </List.Item.Detail.Metadata.TagList>
               <List.Item.Detail.Metadata.Label title="Set" text={card.set_name} />
               <List.Item.Detail.Metadata.Label title="Prices" text={formatPrices(card)} />
               <List.Item.Detail.Metadata.Label title="Legal" text={legalFormats(card)} />

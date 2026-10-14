@@ -9,12 +9,6 @@ export function manaCost(card: Card): string {
   return card.mana_cost ?? card.card_faces?.map((f) => f.mana_cost).filter(Boolean).join(" // ") ?? "";
 }
 
-/** Mana cost without braces plus the mana value, e.g. "1UG (3)". */
-export function manaValueText(card: Card): string {
-  const cost = manaCost(card).replace(/\{([^}]+)\}/g, "$1");
-  return cost ? `${cost} (${card.cmc})` : `(${card.cmc})`;
-}
-
 export function typeLine(card: Card): string {
   return card.type_line ?? card.card_faces?.map((f) => f.type_line).filter(Boolean).join(" // ") ?? "";
 }

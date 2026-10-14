@@ -66,31 +66,3 @@ export function manaSymbols(cost: string): ({ icon: string } | { text: string })
     return i === 0 ? symbols : [{ text: "//" }, ...symbols];
   });
 }
-
-/** Path of one SVG showing the whole mana cost in a row, or undefined for costless cards. */
-export function manaCostFile(cost: string): string | undefined {
-  const GAP = 4;
-  const parts: string[] = [];
-  let x = 0;
-  cost.split(" // ").forEach((face, i) => {
-    if (i > 0) {
-      parts.push(`<text x="${x + 6}" y="22" font-size="18" font-family="sans-serif" fill="#888">//</text>`);
-      x += 28;
-    }
-    for (const [, token] of face.matchAll(/\{([^}]+)\}/g)) {
-      parts.push(`<g transform="translate(${x} 0)">${symbolBody(token, `c${parts.length}`)}</g>`);
-      x += 32 + GAP;
-    }
-  });
-  if (!parts.length) return undefined;
-  const dir = join(environment.supportPath, "mana-v1");
-  const file = join(dir, `cost-${cost.toLowerCase().replace(/[^a-z0-9]+/g, "_")}.svg`);
-  if (!existsSync(file)) {
-    mkdirSync(dir, { recursive: true });
-    writeFileSync(
-      file,
-      `<svg xmlns="http://www.w3.org/2000/svg" width="${x}" height="32" viewBox="0 0 ${x} 32">${parts.join("")}</svg>`,
-    );
-  }
-  return file;
-}
