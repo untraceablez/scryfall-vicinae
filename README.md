@@ -30,3 +30,7 @@ npm run build  # install into Vicinae
 ## Disclaimer
 
 Unofficial and not affiliated with Scryfall or Wizards of the Coast. Card data and images are provided by Scryfall; Magic: The Gathering is a trademark of Wizards of the Coast.
+
+## Credits
+
+Mana symbol glyphs are from the [Mana font](https://mana.andrewgioia.com) by Andrew Gioia, licensed under the [SIL Open Font License 1.1](https://openfontlicense.org).
