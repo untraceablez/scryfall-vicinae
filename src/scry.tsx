@@ -2,7 +2,7 @@ import { Action, ActionPanel, Icon, List, Toast, getPreferenceValues, showToast 
 import { useEffect, useState } from "react";
 import { Card, ScryfallError, SearchResult, searchCards, searchUrl } from "./api";
 import { manaSymbols } from "./mana";
-import { formatPrices, imageUrl, legalFormats, manaCost, oracleText, typeLine } from "./card";
+import { formatPrices, imageUrl, formatsWithStatus, manaCost, oracleText, typeLine } from "./card";
 
 const DEBOUNCE_MS = 300;
 const SYNTAX_URL = "https://scryfall.com/docs/syntax";
@@ -15,6 +15,8 @@ function CardItem({ card }: { card: Card }) {
   const image = imageUrl(card);
   const text = oracleText(card);
   const symbols = manaSymbols(manaCost(card));
+  const legal = formatsWithStatus(card, "legal");
+  const restricted = formatsWithStatus(card, "restricted");
   return (
     <List.Item
       title={card.name}
@@ -33,7 +35,10 @@ function CardItem({ card }: { card: Card }) {
               </List.Item.Detail.Metadata.TagList>
               <List.Item.Detail.Metadata.Label title="Set" text={card.set_name} />
               <List.Item.Detail.Metadata.Label title="Prices" text={formatPrices(card)} />
-              <List.Item.Detail.Metadata.Label title="Legal" text={legalFormats(card)} />
+              <List.Item.Detail.Metadata.Label title="Legal" text={legal.join(", ") || "None"} />
+              {restricted.length > 0 && (
+                <List.Item.Detail.Metadata.Label title="Restricted" text={restricted.join(", ")} />
+              )}
             </List.Item.Detail.Metadata>
           }
         />
