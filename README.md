@@ -16,6 +16,8 @@ The first few matches are shown with the card image and details. The last row op
 | --- | --- |
 | Enter on a card | Open it on Scryfall |
 | Copy Card Name / Oracle Text | Copy to clipboard |
+| Copy for Discord | Copy `[[Card Name]]` for Discord card bots |
+| Copy Art View for Discord | Copy `[[!Card Name]]` for the art-only view |
 
 The number of cards listed can be changed in the extension preferences.
 

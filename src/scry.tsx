@@ -47,6 +47,8 @@ function CardItem({ card }: { card: Card }) {
         <ActionPanel>
           <Action.OpenInBrowser title="Open on Scryfall" url={card.scryfall_uri} />
           <Action.CopyToClipboard title="Copy Card Name" content={card.name} />
+          <Action.CopyToClipboard title="Copy for Discord" content={`[[${card.name}]]`} />
+          <Action.CopyToClipboard title="Copy Art View for Discord" content={`[[!${card.name}]]`} />
           {text && <Action.CopyToClipboard title="Copy Oracle Text" content={text} />}
         </ActionPanel>
       }
