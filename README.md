@@ -33,7 +33,11 @@ npm run build  # install into Vicinae
 
 ## Disclaimer
 
-Unofficial and not affiliated with Scryfall or Wizards of the Coast. Card data and images are provided by Scryfall; Magic: The Gathering is a trademark of Wizards of the Coast.
+This extension is unofficial. It is not provided by, endorsed by, or affiliated with Scryfall. Card data and images are provided by the [Scryfall API](https://scryfall.com/docs/api); Scryfall is a separate project and is not responsible for this extension.
+
+### Wizards of the Coast Fan Content Policy
+
+Scryfall for Vicinae is unofficial Fan Content permitted under the [Fan Content Policy](https://company.wizards.com/en/legal/fancontentpolicy). Not approved/endorsed by Wizards. Portions of the materials used are property of Wizards of the Coast. ©Wizards of the Coast LLC. Magic: The Gathering is a trademark of Wizards of the Coast.
 
 ## Credits
 
