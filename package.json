@@ -6,7 +6,7 @@
   "icon": "icon.png",
   "categories": ["Web", "Fun"],
   "keywords": ["scryfall", "magic", "mtg", "cards", "search"],
-  "license": "Apache-2.0",
+  "license": "MIT",
   "author": "untraceablez",
   "scripts": {
     "build": "vici build",
